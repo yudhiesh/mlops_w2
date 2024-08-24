@@ -5,7 +5,7 @@ from project.src.data_models import SimpleModelRequest, SimpleModelResponse
 
 app = FastAPI(
     title="Drug Review Sentiment Analysis",
-    description="Classify Reviews by their Sentiment",
+    description="Drug Review Sentiment Classifier",
     version="0.1",
 )
 
@@ -27,7 +27,7 @@ class APIIngress:
 )
 class SimpleModel:
     def __init__(self):
-        self.classifier = ...
+        self.classifier = 
 
     def predict(self, review: str):
         return self.classifier(review)
