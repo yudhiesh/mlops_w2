@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from ray import serve
 from ray.serve.handle import DeploymentHandle
-from project.src.data_models import SimpleModelRequest, SimpleModelResponse
+
+from src.model import Model
 
 app = FastAPI(
     title="Drug Review Sentiment Analysis",
@@ -17,8 +18,11 @@ class APIIngress:
         self.handle = simple_model_handle
 
     @app.get("/predict")
-    async def predict(self, request: SimpleModelRequest) -> SimpleModelResponse:
-        return await self.handle.predict.remote(request.review)
+    async def predict(
+        self,
+        review: str,
+    ):
+        return await self.handle.predict.remote(review)
 
 
 @serve.deployment(
@@ -27,10 +31,10 @@ class APIIngress:
 )
 class SimpleModel:
     def __init__(self):
-        self.classifier = 
+        self.session = Model.load_model()
 
     def predict(self, review: str):
-        return self.classifier(review)
+        return Model.predict(self.session, review=review)
 
 
 entrypoint = APIIngress.bind(SimpleModel.bind())

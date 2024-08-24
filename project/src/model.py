@@ -1,15 +1,27 @@
-import wandb
 import numpy as np
 import onnxruntime as rt
-from src.constants import WANDB_MODEL_REGISTRY_MODEL_NAME
-from src.data_models import SimpleModelRawResults
 
-def load_model() -> rt.InferenceSession:
-    run = wandb.init()
-    downloaded_model_path = run.use_model(name=WANDB_MODEL_REGISTRY_MODEL_NAME)
-    return rt.InferenceSession(downloaded_model_path, providers=['CPUExecutionProvider'])
+import wandb
+from src.constants import WANDB_API_KEY, WANDB_MODEL_REGISTRY_MODEL_NAME
 
-def predict(review: str, session: rt.InferenceSession) -> SimpleModelRawResults:
-    input_name = session.get_inputs()[0].name
-    _, probas = session.run(None, {input_name: np.array([[review]])})
-    return SimpleModelRawResults(**probas[0])
+
+class Model:
+    @classmethod
+    def load_model(cls):
+        if WANDB_API_KEY is None:
+            raise ValueError(
+                "WANDB_API_KEY not set, unable to pull the model!",
+            )
+        run = wandb.init()
+        downloaded_model_path = run.use_model(
+            name=WANDB_MODEL_REGISTRY_MODEL_NAME,
+        )
+        return rt.InferenceSession(
+            downloaded_model_path, providers=["CPUExecutionProvider"]
+        )
+
+    @classmethod
+    def predict(cls, session: rt.InferenceSession, review: str):
+        input_name = session.get_inputs()[0].name
+        _, probas = session.run(None, {input_name: np.array([[review]])})
+        return probas[0]
