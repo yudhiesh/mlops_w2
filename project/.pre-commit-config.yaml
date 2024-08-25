@@ -13,6 +13,10 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: mixed-line-ending
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.1
+    hooks:
+      - id: actionlint
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.17.0
     hooks:
@@ -34,3 +38,10 @@ repos:
         require_serial: true
         language: system
         types: [python]
+  - id: actionlint
+    name: Lint GitHub Actions workflow files
+    description: Runs actionlint to lint GitHub Actions workflow files
+    language: golang
+    types: ["yaml"]
+    files: ^\.github/workflows/
+    entry: actionlint

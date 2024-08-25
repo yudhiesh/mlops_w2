@@ -19,6 +19,9 @@ jobs:
         shell: bash
   tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./project
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-poetry-env
@@ -30,6 +33,9 @@ jobs:
 
   pre-commit:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./project
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-poetry-env
