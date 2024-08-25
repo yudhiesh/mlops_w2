@@ -3,7 +3,6 @@ name = "project"
 version = "0.1.0"
 description = ""
 authors = ["yudhiesh"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -18,8 +17,13 @@ onnxruntime = "^1.19.0"
 wandb = "^0.17.7"
 ipython = "^8.26.0"
 loguru = "^0.7.2"
+pytest-cov = "^5.0.0"
+pre-commit = "^3.8.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-fail-under=70"
