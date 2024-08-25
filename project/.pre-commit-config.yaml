@@ -38,10 +38,3 @@ repos:
         require_serial: true
         language: system
         types: [python]
-  - id: actionlint
-    name: Lint GitHub Actions workflow files
-    description: Runs actionlint to lint GitHub Actions workflow files
-    language: golang
-    types: ["yaml"]
-    files: ^\.github/workflows/
-    entry: actionlint
