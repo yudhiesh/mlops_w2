@@ -1,0 +1,33 @@
+name: Test Ray Serve API
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  actionlint:
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download actionlint
+        run: bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.21
+        shell: bash
+      - name: Check workflow files
+        run: ./actionlint
+        shell: bash
+  tests:
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-poetry-env
+        with:
+          python-version: "3.10"
+      - run: poetry run tox
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+
+  pre-commit:
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-poetry-env
+      - run: poetry run pre-commit run --all-files

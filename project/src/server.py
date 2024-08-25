@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from loguru import logger
 from ray import serve
 from ray.serve.handle import DeploymentHandle
 
