@@ -16,6 +16,8 @@ ray = {extras = ["serve"], version = "^2.34.0"}
 numpy = "^2.1.0"
 onnxruntime = "^1.19.0"
 wandb = "^0.17.7"
+ipython = "^8.26.0"
+loguru = "^0.7.2"
 
 
 [build-system]
