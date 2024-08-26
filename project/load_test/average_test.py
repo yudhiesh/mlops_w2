@@ -8,7 +8,7 @@ class APIUser(HttpUser):
     def predict(self):
         headers = {"Content-Type": "application/json"}
         data = {"review": "Hello world this is the best product ever!"}
-        
+
         with self.client.post("/predict", data=json.dumps(data), headers=headers, catch_response=True) as response:
             if response.status_code == 200:
                 response.success()
