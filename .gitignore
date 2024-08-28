@@ -164,3 +164,8 @@ cython_debug/
 # Project specific items to ignore
 project/artifacts/**
 project/wandb/**
+project/data/**
+project/grafana-*/**
+project/prometheus-*/**
+project/grafana-*
+project/prometheus-*
